@@ -21,10 +21,10 @@ import ctypes
 from globalVars import appArgs
 from threading import Thread
 
-# Lína de traducción
+# translation line
 addonHandler.initTranslation()
 
-soundsPath = os.path.join(appArgs.configPath, 'addons', 'whatsapp', 'sounds')
+soundsPath = os.path.join(appArgs.configPath, 'addons', 'WhatsAppEnhancements', 'sounds')
 
 class disable_file_system_redirection:
 
@@ -58,47 +58,47 @@ def obtenApps():
 		lista_final.append(z)
 	return lista_final
 
-def buscarApp(lista, valor):
+def searchApp(list, value):
 	tempA = []
 	tempB = []
-	for i in range(0, len(lista)):
-		tempA.append(lista[i][0])
-		tempB.append(lista[i][1])
-	filtro = [item for item in tempA if valor.lower() in item.lower()]
-	return tempA, tempB, filtro
+	for i in range(0, len(list)):
+		tempA.append(list[i][0])
+		tempB.append(list[i][1])
+	filter = [item for item in tempA if value.lower() in item.lower()]
+	return tempA, tempB, filter
 
 IS_WinON = False
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@script(
-		category= 'whatsapp',
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Abre WhatsApp, o la enfoca si ya se encuentra abierta')
+		category= 'WhatsAppEnhancements',
+		# Item Description in Input Gestures Dialog
+		description= _('Open WhatsApp, or focus it if it is already open')
 	)
 	def script_open(self, gesture):
-		_MainWindows = HiloComplemento()
+		_MainWindows = ComplementThread()
 		_MainWindows.start()
 
 class ViewApps(wx.Dialog):
-	def __init__(self, parent, nombre, id, resultados):
-		# Translators: Título de la ventana
-		super(ViewApps, self).__init__(parent, -1, title=_('Selector de aplicación'), size=(350, 150))
+	def __init__(self, parent, name, id, results):
+		# window title
+		super(ViewApps, self).__init__(parent, -1, title=_('app launcher'), size=(350, 150))
 		global IS_WinON
 		IS_WinON = True
 		self.choiceSelection = 0
-		self.nombre = nombre
+		self.name = name
 		self.id = id
-		self.resultados = resultados
+		self.results = results
 		self.Panel = wx.Panel(self)
-		self.choice = wx.Choice(self.Panel, wx.ID_ANY, choices =["Seleccione una aplicación de WhatsApp"] + self.resultados)
+		self.choice = wx.Choice(self.Panel, wx.ID_ANY, choices =["Select a WhatsApp application"] + self.results)
 		self.choice.SetSelection(self.choiceSelection)
 		self.choice.Bind(wx.EVT_CHOICE, self.onChoiceApp)
-		#Translators: etiqueta del botón aceptar
-		self.aceptar = wx.Button(self.Panel, wx.ID_ANY, _('Lanzar &aplicación'))
-		self.aceptar.Bind(wx.EVT_BUTTON, self.onAceptar)
-		#Translators: etiqueta del botón cancelar
-		self.closeButton = wx.Button(self.Panel, wx.ID_CANCEL, _('&Cerrar'))
+		# launch button label
+		self.launch = wx.Button(self.Panel, wx.ID_ANY, _('Launch'))
+		self.launch.Bind(wx.EVT_BUTTON, self.onLaunch)
+		# cancel button label
+		self.closeButton = wx.Button(self.Panel, wx.ID_CANCEL, _('Cancel'))
 		self.closeButton.Bind(wx.EVT_BUTTON, self.close, id=wx.ID_CANCEL)
 
 		sizerV = wx.BoxSizer(wx.VERTICAL)
@@ -106,7 +106,7 @@ class ViewApps(wx.Dialog):
 
 		sizerV.Add(self.choice, 0, wx.EXPAND | wx.ALL)
 
-		sizerH.Add(self.aceptar, 2, wx.CENTER)
+		sizerH.Add(self.launch, 2, wx.CENTER)
 		sizerH.Add(self.closeButton, 2, wx.CENTER)
 
 		sizerV.Add(sizerH, 0, wx.CENTER)
@@ -116,21 +116,21 @@ class ViewApps(wx.Dialog):
 		self.CenterOnScreen()
 
 	def onChoiceApp(self, event):
-		#Translators: título de selección de aplicación
-		if self.choice.GetString(self.choice.GetSelection()) == _('Seleccione una de las aplicaciones de WhatsApp'):
+		# app selection title
+		if self.choice.GetString(self.choice.GetSelection()) == _('Select one of the WhatsApp applications'):
 			self.choiceSelection = 0
 		else:
 			self.choiceSelection = event.GetSelection()
 
-	def onAceptar(self, event):
+	def onLaunch(self, event):
 		if self.choiceSelection == 0:
-			# Translators: Mensaje de aviso de selección de aplicación
-			gui.messageBox(_('Debe seleccionar una aplicación para continuar.'), _("Información"), wx.ICON_INFORMATION)
+			# Application Selection Warning Message
+			gui.messageBox(_('You must select an application to continue.'), _("Información"), wx.ICON_INFORMATION)
 			self.choice.SetFocus()
 		else:
 			global IS_WinON
 			IS_WinON = False
-			shellapi.ShellExecute(None, 'open', "explorer.exe", "shell:appsfolder\{}".format(self.id[self.nombre.index(self.resultados[self.choiceSelection - 1])]), None, 10)
+			shellapi.ShellExecute(None, 'open', "explorer.exe", "shell:appsfolder\{}".format(self.id[self.name.index(self.results[self.choiceSelection - 1])]), None, 10)
 			self.Destroy()
 			gui.mainFrame.postPopup()
 
@@ -140,25 +140,25 @@ class ViewApps(wx.Dialog):
 		self.Destroy()
 		gui.mainFrame.postPopup()
 
-class HiloComplemento(Thread):
+class ComplementThread(Thread):
 	def __init__(self):
-		super(HiloComplemento, self).__init__()
-		playWaveFile(os.path.join(soundsPath, 'open.wav'))
+		super(ComplementThread, self).__init__()
+		playWaveFile(os.path.join(soundsPath, 'launching.wav'))
 
 		self.daemon = True
 
 	def run(self):
 		def runApp():
-			nombre, id, resultados = buscarApp(obtenApps(), "WhatsApp")
-			if len(resultados) == 1:
-				shellapi.ShellExecute(None, 'open', "explorer.exe", "shell:appsfolder\{}".format(id[nombre.index(resultados[0])]), None, 10)
-			elif len(resultados) >= 2:
+			name, id, results = searchApp(obtenApps(), "WhatsApp")
+			if len(results) == 1:
+				shellapi.ShellExecute(None, 'open', "explorer.exe", "shell:appsfolder\{}".format(id[name.index(results[0])]), None, 10)
+			elif len(results) >= 2:
 				if IS_WinON == False:
-					self._MainWindows = ViewApps(gui.mainFrame, nombre, id, resultados)
+					self._MainWindows = ViewApps(gui.mainFrame, name, id, results)
 					gui.mainFrame.prePopup()
 					self._MainWindows.Show()
 			else:
-				# Translators: Mensaje de aviso de aplicación no encontrada
-				ui.message(_('No se ha encontrado la aplicación de WhatsApp'))
+				# Application not found warning message
+				ui.message(_('WhatsApp application not found'))
 
 		wx.CallAfter(runApp)

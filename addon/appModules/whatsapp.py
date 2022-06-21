@@ -16,7 +16,7 @@ from re import search, sub
 import os
 import addonHandler
 
-# Lína de traducción
+# Translation Line
 addonHandler.initTranslation()
 
 def mute(time, msg= False):
@@ -25,33 +25,33 @@ def mute(time, msg= False):
 		sleep(0.1)
 	Thread(target=killSpeak, args=(time,), daemon= True).start()
 
-# Función para romper la cadena de verbalización y callar al sintetizador durante el tiempo especificado
+# Function to break the speech chain and silence the synthesizer for the specified time
 def killSpeak(time):
 	speech.setSpeechMode(speech.SpeechMode.off)
 	sleep(time)
 	speech.setSpeechMode(speech.SpeechMode.talk)
 
 class AppModule(appModuleHandler.AppModule):
-	# Translators: Nombre de categoría en el diálogo gestos de entrada
-	category = _('whatsapp')
+	# Category name in input gestures dialog
+	category = _('WhatsApp Enhancements')
 
 	def __init__(self, *args, **kwargs):
 		super(AppModule, self).__init__(*args, **kwargs)
-		# Translators: Mensaje que anuncia que no se ha encontrado el elemento
-		self.notFound = _('Elemento no encontrado')
+		# Message announcing that an element was not found
+		self.notFound = _('Item not found')
 		self.lastChat = None
-		self.soundsPath = os.path.join(appArgs.configPath, 'addons', 'whatsapp', 'sounds')
+		self.soundsPath = os.path.join(appArgs.configPath, 'addons', 'WhatsAppEnhancements', 'sounds')
 		self.configFile()
 
 	def configFile(self):
 		try:
-			with open(f'{appArgs.configPath}\\whatsapp.ini', 'r') as f:
+			with open(f'{appArgs.configPath}\\WhatsAppEnhancements.ini', 'r') as f:
 				self.viewConfig = f.read()
 		except FileNotFoundError:
-			with open(f'{appArgs.configPath}\\whatsapp.ini', 'w') as f:
-				f.write('desactivado')
+			with open(f'{appArgs.configPath}\\WhatsAppEnhancements.ini', 'w') as f:
+				f.write('disabled')
 
-	# Función que recibe el UIAAutomationId por parámetro, y devuelve el objeto de coincidencia
+	# Function that receives the UIAAutomationId by parameter, and returns the match object
 	def get(self, id, errorMessage, gesture):
 		for obj in api.getForegroundObject().children[1].children:
 			if obj.UIAAutomationId == id:
@@ -63,20 +63,10 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
 		try:
-			if obj.UIAAutomationId == 'RightButton' and obj.previous.description == '':
-				# Translators: Etiqueta del botón mensaje de voz
-				obj.name = _('Mensaje de voz')
-			elif obj.name == 'WhatsApp.ChatListArchiveButtonCellVm':
-				# Translators: Etiqueta del elemento mensajes archivados
-				obj.name = _('Chats Archivados')
-			elif obj.UIAAutomationId == 'BackButton':
-				# Translators: Etiqueta del botón atrás en los chatsArchivados
-				obj.name = _('Atrás')
-			elif obj.UIAAutomationId == 'PttDeleteButton':
-				# Translators: Etiqueta del botón cancelar mensaje de voz
-				obj.name = _('Cancelar mensaje')
+			if obj.UIAAutomationId == 'BackButton':
+				obj.name = _('Back')
 			elif obj.name == '\ue8bb':
-				obj.name = _('Cancelar respuesta')
+				obj.name = _('Cancel reply')
 			elif obj.UIAAutomationId == "SendMessages":
 				obj.name = _(obj.previous.name+": "+obj.firstChild.name)
 			elif obj.UIAAutomationId == "EditInfo":
@@ -87,16 +77,21 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = obj.previous.name + obj.firstChild.children[1].name
 			elif obj.name == 'WhatsApp.Design.ThemeData':
 				obj.name = obj.children[1].name
-			elif obj.UIAAutomationId == 'PttPauseButton':
-				# Translators: Etiqueta del botón pausar grabación
-				obj.name = _('Pausar grabación')
-			elif obj.UIAAutomationId == 'PttSendButton':
-				# Translators: Etiqueta del botón Enviar mensaje de voz
-				obj.name = _('Enviar mensaje de voz')
+			if obj.name == "WhatsApp.PeerStreamVm":
+				if obj.firstChild.children[1].name == "Ringing...":
+					obj.name = obj.firstChild.children[0].name + ", " + obj.firstChild.children[1].name
+				elif obj.firstChild.children[2].name == "Muted":
+					obj.name = obj.firstChild.children[0].name + ", " + obj.firstChild.children[2].name + ", " + obj.firstChild.children[3].name
+				else:
+					obj.name = _(obj.firstChild.children[0].name + ", Unmuted, " + obj.firstChild.children[2].name)
+			elif obj.UIAAutomationId in ("CancelButton", "RejectButton"):	
+				obj.name = obj.firstChild.name
+			elif obj.UIAAutomationId == "AcceptButton":
+				obj.name = obj.children[1].name
 		except:
 			pass
 		try:
-			if self.viewConfig == 'desactivado': return
+			if self.viewConfig == 'disabled': return
 			if obj.UIAAutomationId == 'BubbleListItem':
 				obj.name = sub(r'\+\d[()\d\s‬-]{12,}', '', obj.name)
 		except:
@@ -104,11 +99,11 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_gainFocus(self, obj, nextHandler):
 		try:
-			# Renombre del mensaje con documento adjunto por el texto de los objetos que tienen el nombre el archivo, tipo y tamaño
+			# Rename the message with attached document by the text of the objects that have the file name, type and size
 			if obj.UIAAutomationId == 'BubbleListItem' and (obj.children[1].UIAAutomationId == 'NameTextBlock' or obj.children[3].UIAAutomationId == 'NameTextBlock' or obj.children[4].UIAAutomationId == 'NameTextBlock'):
 				for data in obj.children:
 					if data.UIAAutomationId == 'NameTextBlock':
-						obj.name = '{} {}'.format(data.name, data.next.name)
+						obj.name = '{}, {}'.format(data.name, data.next.name)
 			else:
 				nextHandler()
 		except:
@@ -123,38 +118,56 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 	category= category,
-	# Translators: Descripción del elemento en el diálogo gestos de entrada
-	description= _('Iniciar o finalizar la grabación de un mensaje de voz'),
+	# Item Description in Input Gestures Dialog
+	description= _('Start or stop recording'),
 		gesture= 'kb:control+r'
 	)
-	def script_voiceMessage(self, gesture):
+	def script_record(self, gesture):
 		send = self.get('PttSendButton', False, None)
 		if send:
 			send.doAction()
-			playWaveFile(os.path.join(self.soundsPath, 'send.wav'))
+			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_sent.wav'))
 			return
 		record = self.get('RightButton', True, gesture)
 		if record:
 			record.doAction()
 			mute(1)
-			playWaveFile(os.path.join(self.soundsPath, 'start.wav'))
+			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_start_record.wav'))
+
+	@script(
+	category= category,
+	# Item Description in Input Gestures Dialog
+	description= _('Pause or resume recording'),
+		gesture= 'kb:alt+r'
+	)
+	def script_pause(self, gesture):
+		pause = self.get('PttPauseButton', False, None)
+		if pause:
+			pause.doAction()
+			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_stop_record.wav'))
+			return
+		resume = self.get('PttResumeButton', True, gesture)
+		if resume:
+			resume.doAction()
+			mute(1)
+			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_start_record.wav'))
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Cancela la grabación de los mensajes de voz'),
+		# Item Description in Input Gestures Dialog
+		description= _('Discard voice message'),
 		gesture= 'kb:control+shift+r'
 	)
 	def script_cancelVoiceMessage(self, gesture):
 		cancel = self.get('PttDeleteButton', False, gesture)
 		if cancel:
 			cancel.doAction()
-			playWaveFile(os.path.join(self.soundsPath, 'cancel.wav'))
+			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_quick_cancel.wav'))
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Verbaliza el tiempo de grabación de un mensaje'),
+		# Item Description in Input Gestures Dialog
+		description= _('Report the recording time when recording voice message'),
 		gesture= 'kb:control+t'
 	)
 	def script_timeAnnounce(self, gesture):
@@ -164,29 +177,38 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Activa y desactiva la eliminación de los números de teléfono de los contactos no agendados en los mensajes'),
+		# Item Description in Input Gestures Dialog
+		description= _('Activate and deactivate the reading of phone numbers for unsaved contacts in messages'),
 		gesture= 'kb:control+shift+e'
 	)
 	def script_viewConfigToggle(self, gesture):
 		self.configFile()
-		with open(f'{appArgs.configPath}\\whatsapp.ini', 'w') as f:
-			if self.viewConfig == 'activado':
-				f.write('desactivado')
-				self.viewConfig = 'desactivado'
-				# Translators: Mensaje que indica la desactivación de los mensajes editados
-				message(_('Mensajes editados, desactivado'))
+		with open(f'{appArgs.configPath}\\WhatsAppEnhancements.ini', 'w') as f:
+			if self.viewConfig == 'enabled':
+				f.write('disabled')
+				self.viewConfig = 'disabled'
+				message(_('Reading phone number disabled'))
 			else:
-				f.write('activado')
-				self.viewConfig = 'activado'
-				# Translators: Mensaje que anuncia la activación de los mensajes editados
-				message(_('Mensajes editados, activado'))
+				f.write('enabled')
+				self.viewConfig = 'enabled'
+				message(_('Reading phone number enabled'))
 
 	@script(
 	category= category,
-	# Translators: Descripción del elemento en el diálogo gestos de entrada
-	description= _('Enfoca la lista de chats'),
-		gesture= 'kb:alt+rightArrow'
+	# Item Description in Input Gestures Dialog
+	description= _('Press the back button'),
+		gesture= 'kb:alt+b'
+	)
+	def script_backbutton(self, gesture):
+		backButton = self.get('BackButton', True, gesture)
+		if backButton:
+			backButton.doAction()
+
+	@script(
+	category= category,
+	# Item Description in Input Gestures Dialog
+	description= _('Focus on the chat list'),
+		gesture= 'kb:alt+c'
 	)
 	def script_chatsList(self, gesture):
 		if self.lastChat:
@@ -194,50 +216,66 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Conmuta entre la lista de mensajes y el cuadro de edición dentro de un chat'),
-		gesture= 'kb:alt+leftArrow'
+		# Item Description in Input Gestures Dialog
+		description= _('Go to the typing message text field'),
+		gesture= 'kb:alt+e'
 	)
-	def script_switch(self, gesture):
-		if api.getFocusObject().UIAAutomationId == 'BubbleListItem':
-			textBox = self.get('TextBox', False, None)
-			if textBox:
-				textBox.setFocus()
-		else:
-			listView = self.get('ListView', False, None)
-			if listView:
-				listView.lastChild.setFocus()
+	def script_messageField(self, gesture):
+		textBox = self.get('TextBox', False, None)
+		if textBox:
+			textBox.setFocus()
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Verbaliza el nombre del contacto o grupo'),
-		gesture= 'kb:control+shift+t'
+		# Item Description in Input Gestures Dialog
+		description= _('Go to the messages list'),
+		gesture= 'kb:alt+m'
+	)
+	def script_messagesList(self, gesture):
+		listView = self.get('ListView', False, None)
+		if listView:
+			listView.lastChild.setFocus()
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Go to the unread messages section'),
+		gesture= 'kb:alt+u'
+	)
+	def script_unread(self, gesture):
+		def search(txt):
+			words = ["غير مقرو", "unread", "непрочитанное сообщение", "Непрочитано", "непрочитанных сообщений", "Непрочитане"]
+			for word in words:
+				if txt.find(word) != -1:
+					return word
+			return -1
+		listView = self.get('ListView', False, None)
+		if listView:
+			for msg in listView.children[::-1]:
+				if len(msg.children) == 1 and search(msg.name) != -1:
+					msg.next.setFocus()
+					break
+			else:
+				message("There's no unread messages")
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Read the chat subtitle'),
+		gesture= 'kb:alt+t'
 	)
 	def script_chatName(self, gesture):
 		title = self.get('TitleButton', True, gesture)
 		if title:
-			message(' '.join([obj.name for obj in title.children if len(obj.name) < 50]))
+			message(', '.join([obj.name.strip() for obj in title.children if len(obj.name) < 50]))
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Verbaliza la respuesta en el mensaje con el foco'),
-		gesture= 'kb:alt+r'
-	)
-	def script_responseText(self, gesture):
-		fc = api.getFocusObject()
-		if fc.UIAAutomationId == 'BubbleListItem':
-			text = '\n'.join([item.name for item in fc.children if item.UIAAutomationId == 'TextBlock'])
-			message(text)
-
-	@script(
-		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Pulsa el botón adjuntar'),
+		# Item Description in Input Gestures Dialog
+		description= _('Press the attach button'),
 		gesture= 'kb:control+shift+a'
 	)
-	def script_toAttach(self, gesture):
+	def script_attach(self, gesture):
 		attach = self.get('AttachButton', True, gesture)
 		if attach:
 			message(attach.name)
@@ -245,9 +283,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Pulsa el botón info del chat'),
-		gesture= 'kb:control+shift+i'
+		# Item Description in Input Gestures Dialog
+		description= _('Open chat info'),
+		gesture= 'kb:alt+i'
 	)
 	def script_moreInfo(self, gesture):
 		info = self.get('TitleButton', True, gesture)
@@ -257,9 +295,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Pulsa el botón de configuración'),
-		gesture= 'kb:control+shift+o'
+		# Item Description in Input Gestures Dialog
+		description= _('Press the more option button'),
+		gesture= 'kb:alt+o'
 	)
 	def script_settings(self, gesture):
 		settings = self.get('SettingsButton', True, gesture)
@@ -269,9 +307,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Pulsa el botón de nuevo chat'),
-		gesture= 'kb:control+shift+n'
+		# Item Description in Input Gestures Dialog
+		description= _('Press the new chat button'),
+		gesture= 'kb:control+n'
 	)
 	def script_newChat(self, gesture):
 		newChat = self.get('NewConvoButton', True, gesture)
@@ -281,32 +319,26 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Pulsa el botón llamada de video'),
+		# Item Description in Input Gestures Dialog
+		description= _('Press the video call button'),
 		gesture= 'kb:control+shift+v'
 	)
 	def script_videoCall(self, gesture):
+		name = self.get('TitleButton', True, None)
 		videoCall = self.get('VideoCallButton', True, gesture)
 		if videoCall:
-			message(videoCall.name)
+			message("Please wait, you will be connected with "+name.firstChild.name.strip()+" through a video call.")
 			videoCall.doAction()
 
 	@script(
 		category= category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Pulsa el botón llamada de audio'),
-		gesture= 'kb:control+shift+l'
+		# Item Description in Input Gestures Dialog
+		description= _('Press the audio call button'),
+		gesture= 'kb:control+shift+c'
 	)
 	def script_audioCall(self, gesture):
+		name = self.get('TitleButton', True, None)
 		audioCall = self.get('AudioCallButton', True, gesture)
 		if audioCall:
-			message(audioCall.name)
+			message("Please wait, you will be connected with "+name.firstChild.name.strip()+" through an audio call.")
 			audioCall.doAction()
-
-	@script(gesture="kb:f1")
-	def script_help(self, gesture):
-		# try:
-		playWaveFile(os.path.join(self.soundsPath, 'open.wav'))
-		wx.LaunchDefaultBrowser('file://' + addonHandler.Addon(os.path.join(appArgs.configPath, "addons", "whatsapp")).getDocFilePath(), flags=0)
-		# except:
-			# message(self.notFound)
