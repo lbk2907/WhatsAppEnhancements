@@ -16,14 +16,14 @@ def _(arg):
 # Add-on information variables
 addon_info = {
 	# add-on Name/identifier, internal for NVDA
-	"addon_name": "whatsapp",
+	"addon_name": "WhatsAppEnhancements",
 	# Add-on summary, usually the user visible name of the addon.
 	# Translators: Summary for this add-on
 	# to be shown on installation and add-on information found in Add-ons Manager.
-	"addon_summary": _("whatsapp"),
+	"addon_summary": _("WhatsAppEnhancements"),
 	# Add-on description
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
-	"addon_description": _("""Complemento que renombra botones sin etiqueta, añade atajos de teclado para funciones principales de la aplicación, y funciones de enfoque para una mejor interacción con la interfaz."""),
+	"addon_description": _("""Plugin that renames unlabeled buttons, add keyboard shortcuts for main application functions and focus functions for better interaction with the interface."""),
 	# version
 	"addon_version": "1.2",
 	# Author(s)
@@ -35,7 +35,7 @@ addon_info = {
 	# Minimum NVDA version supported (e.g. "2018.3.0", minor version is optional)
 	"addon_minimumNVDAVersion": "2021.3",
 	# Last NVDA version supported/tested (e.g. "2018.4.0", ideally more recent than minimum version)
-	"addon_lastTestedNVDAVersion": "2022.1",
+	"addon_lastTestedNVDAVersion": "2022.2",
 	# Add-on update channel (default is None, denoting stable releases,
 	# and for development releases, use "dev".)
 	# Do not change unless you know what you are doing!
@@ -50,7 +50,7 @@ addon_info = {
 # pythonSources = ["addon/globalPlugins/*.py"]
 # For more information on SCons Glob expressions please take a look at:
 # https://scons.org/doc/production/HTML/scons-user/apd.html
-pythonSources = ["addon/appModules/whatsapp.py", "addon/globalPlugins/wsOpen.py"]
+pythonSources = ["addon/appModules/whatsapp.py", "addon/globalPlugins/OpenWhatsApp.py"]
 
 # Files that contain strings for translation. Usually your python sources
 i18nSources = pythonSources + ["buildVars.py"]
@@ -62,7 +62,7 @@ excludedFiles = []
 # Base language for the NVDA add-on
 # If your add-on is written in a language other than english, modify this variable.
 # For example, set baseLanguage to "es" if your add-on is primarily written in spanish.
-baseLanguage = "es"
+baseLanguage = "en"
 
 # Markdown extensions for add-on documentation
 # Most add-ons do not require additional Markdown extensions.
