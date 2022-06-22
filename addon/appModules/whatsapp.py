@@ -53,7 +53,11 @@ class AppModule(appModuleHandler.AppModule):
 
 	# Function that receives the UIAAutomationId by parameter, and returns the match object
 	def get(self, id, errorMessage, gesture):
-		for obj in api.getForegroundObject().children[1].children:
+#		for obj in api.getForegroundObject().children[1].children:
+#			if obj.UIAAutomationId == id:
+#				return obj#
+		fg = api.getForegroundObject().children[1]
+		for obj in fg.children:
 			if obj.UIAAutomationId == id:
 				return obj
 		if errorMessage:
@@ -123,16 +127,17 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:control+r'
 	)
 	def script_record(self, gesture):
+		record = self.get('RightButton', False, None)
 		send = self.get('PttSendButton', False, None)
-		if send:
-			send.doAction()
-			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_sent.wav'))
-			return
-		record = self.get('RightButton', True, gesture)
 		if record:
 			record.doAction()
 			mute(1)
 			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_start_record.wav'))
+		elif send:
+			send.doAction()
+			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_sent.wav'))
+		else:
+			message(self.notFound)
 
 	@script(
 	category= category,
@@ -142,15 +147,16 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_pause(self, gesture):
 		pause = self.get('PttPauseButton', False, None)
+		resume = self.get('PttResumeButton', False, None)
 		if pause:
 			pause.doAction()
 			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_stop_record.wav'))
-			return
-		resume = self.get('PttResumeButton', True, gesture)
-		if resume:
+		elif resume:
 			resume.doAction()
 			mute(1)
 			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_start_record.wav'))
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -159,10 +165,12 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:control+shift+r'
 	)
 	def script_cancelVoiceMessage(self, gesture):
-		cancel = self.get('PttDeleteButton', False, gesture)
+		cancel = self.get('PttDeleteButton', False, None)
 		if cancel:
 			cancel.doAction()
 			playWaveFile(os.path.join(self.soundsPath, 'wa_ptt_quick_cancel.wav'))
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -171,9 +179,11 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:control+t'
 	)
 	def script_timeAnnounce(self, gesture):
-		timer = self.get('PttTimer', False, gesture)
+		timer = self.get('PttTimer', False, None)
 		if timer:
 			message(timer.name)
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -199,10 +209,15 @@ class AppModule(appModuleHandler.AppModule):
 	description= _('Press the back button'),
 		gesture= 'kb:alt+b'
 	)
-	def script_backbutton(self, gesture):
-		backButton = self.get('BackButton', True, gesture)
+	def script_backAndCloseButton(self, gesture):
+		backButton = self.get('BackButton', False, None)
+		closeButton = self.get('CloseButton', False, None)
 		if backButton:
 			backButton.doAction()
+		elif closeButton:
+			closeButton.doAction()
+		else:
+			message(self.notFound)
 
 	@script(
 	category= category,
@@ -211,8 +226,11 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:alt+c'
 	)
 	def script_chatsList(self, gesture):
-		if self.lastChat:
-			self.lastChat.setFocus()
+		chatList = self.get('ChatList', False, None)
+		if ChatList:
+			chatList.firstChild.children[0].setFocus()
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -224,6 +242,8 @@ class AppModule(appModuleHandler.AppModule):
 		textBox = self.get('TextBox', False, None)
 		if textBox:
 			textBox.setFocus()
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -235,6 +255,8 @@ class AppModule(appModuleHandler.AppModule):
 		listView = self.get('ListView', False, None)
 		if listView:
 			listView.lastChild.setFocus()
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -265,9 +287,11 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:alt+t'
 	)
 	def script_chatName(self, gesture):
-		title = self.get('TitleButton', True, gesture)
+		title = self.get('TitleButton', False, None)
 		if title:
 			message(', '.join([obj.name.strip() for obj in title.children if len(obj.name) < 50]))
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -276,10 +300,12 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:control+shift+a'
 	)
 	def script_attach(self, gesture):
-		attach = self.get('AttachButton', True, gesture)
+		attach = self.get('AttachButton', False, None)
 		if attach:
 			message(attach.name)
 			attach.doAction()
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -288,10 +314,12 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:alt+i'
 	)
 	def script_moreInfo(self, gesture):
-		info = self.get('TitleButton', True, gesture)
+		info = self.get('TitleButton', False, None)
 		if info:
 			message(info.name)
 			info.doAction()
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -300,10 +328,12 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:alt+o'
 	)
 	def script_settings(self, gesture):
-		settings = self.get('SettingsButton', True, gesture)
+		settings = self.get('SettingsButton', False, None)
 		if settings:
 			message(settings.name)
 			settings.doAction()
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -312,10 +342,12 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:control+n'
 	)
 	def script_newChat(self, gesture):
-		newChat = self.get('NewConvoButton', True, gesture)
+		newChat = self.get('NewConvoButton', False, None)
 		if newChat:
 			message(newChat.name)
 			newChat.doAction()
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -324,11 +356,13 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:control+shift+v'
 	)
 	def script_videoCall(self, gesture):
-		name = self.get('TitleButton', True, None)
+		name = self.get('TitleButton', False, None)
 		videoCall = self.get('VideoCallButton', True, gesture)
 		if videoCall:
 			message("Please wait, you will be connected with "+name.firstChild.name.strip()+" through a video call.")
 			videoCall.doAction()
+		else:
+			message(self.notFound)
 
 	@script(
 		category= category,
@@ -337,8 +371,10 @@ class AppModule(appModuleHandler.AppModule):
 		gesture= 'kb:control+shift+c'
 	)
 	def script_audioCall(self, gesture):
-		name = self.get('TitleButton', True, None)
+		name = self.get('TitleButton', False, None)
 		audioCall = self.get('AudioCallButton', True, gesture)
 		if audioCall:
 			message("Please wait, you will be connected with "+name.firstChild.name.strip()+" through an audio call.")
 			audioCall.doAction()
+		else:
+			message(self.notFound)
