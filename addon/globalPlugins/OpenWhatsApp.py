@@ -77,7 +77,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		description= _('Open WhatsApp, or focus it if it is already open')
 	)
 	def script_open(self, gesture):
-		_MainWindows = ComplementThread()
+		_MainWindows = PluginThread()
 		_MainWindows.start()
 
 class ViewApps(wx.Dialog):
@@ -140,9 +140,9 @@ class ViewApps(wx.Dialog):
 		self.Destroy()
 		gui.mainFrame.postPopup()
 
-class ComplementThread(Thread):
+class PluginThread(Thread):
 	def __init__(self):
-		super(ComplementThread, self).__init__()
+		super(PluginThread, self).__init__()
 		playWaveFile(os.path.join(soundsPath, 'launching.wav'))
 
 		self.daemon = True
