@@ -81,6 +81,8 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = obj.previous.name + obj.firstChild.children[1].name
 			elif obj.name == 'WhatsApp.Design.ThemeData':
 				obj.name = obj.children[1].name
+			if obj.name in ("WhatsApp.WaCollections.KeyedObservableCollection`2[WhatsApp.GroupItem,WhatsApp.RecipientItem]", "WhatsApp.RecipientItem", "WhatsApp.ReceiptViewModel",):
+				obj.name = ", ".join([m.name for m in obj.children])
 			if obj.name == 'WhatsApp.PeerStreamVm':
 				if obj.firstChild.children[1].name == 'Ringing...':
 					obj.name = obj.firstChild.children[0].name + ', ' + obj.firstChild.children[1].name
