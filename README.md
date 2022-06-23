@@ -1,6 +1,7 @@
 # WhatsAppEnhancements
 
 Author: [Gerardo Kessler](http://gera.ar), [Original Repository](https://github.com/GerardKessler/whatsapp)
+
 Translator: [Loh Boon Keat](https://github.com/lbk2907/)
 
 Important:
