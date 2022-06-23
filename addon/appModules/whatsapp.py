@@ -73,27 +73,27 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = _('Cancel')
 			elif obj.name == '\ue8bb':
 				obj.name = _('Cancel reply')
-			elif obj.UIAAutomationId == "SendMessages":
-				obj.name = obj.previous.name+": "+obj.firstChild.name
-			elif obj.UIAAutomationId == "EditInfo":
-				obj.name = _(obj.previous.name+": "+obj.firstChild.name)
-			elif obj.UIAAutomationId == "MuteDropdown":
-				obj.name = obj.children[0].name
-			elif obj.UIAAutomationId == "ThemeCombobox":
+			elif obj.UIAAutomationId == 'SendMessages':
+				obj.name = obj.previous.name+': '+obj.firstChild.name
+			elif obj.UIAAutomationId == 'EditInfo':
+				obj.name = _(obj.previous.name+': '+obj.firstChild.name)
+			elif obj.UIAAutomationId == 'ThemeCombobox':
 				obj.name = obj.previous.name + obj.firstChild.children[1].name
 			elif obj.name == 'WhatsApp.Design.ThemeData':
 				obj.name = obj.children[1].name
-			if obj.name == "WhatsApp.PeerStreamVm":
-				if obj.firstChild.children[1].name == "Ringing...":
-					obj.name = obj.firstChild.children[0].name + ", " + obj.firstChild.children[1].name
-				elif obj.firstChild.children[2].name == "Muted":
-					obj.name = obj.firstChild.children[0].name + ", " + obj.firstChild.children[2].name + ", " + obj.firstChild.children[3].name
+			if obj.name == 'WhatsApp.PeerStreamVm':
+				if obj.firstChild.children[1].name == 'Ringing...':
+					obj.name = obj.firstChild.children[0].name + ', ' + obj.firstChild.children[1].name
+				elif obj.firstChild.children[2].name == 'Muted':
+					obj.name = obj.firstChild.children[0].name + ', ' + obj.firstChild.children[2].name + ', ' + obj.firstChild.children[3].name
 				else:
-					obj.name = _(obj.firstChild.children[0].name + ", Unmuted, " + obj.firstChild.children[2].name)
-			elif obj.UIAAutomationId in ("CancelButton", "RejectButton"):	
+					obj.name = _(obj.firstChild.children[0].name + ', Unmuted, ' + obj.firstChild.children[2].name)
+			elif obj.UIAAutomationId in ('CancelButton', 'RejectButton'):	
 				obj.name = obj.firstChild.name
-			elif obj.UIAAutomationId == "AcceptButton":
+			elif obj.UIAAutomationId == 'AcceptButton':
 				obj.name = obj.children[1].name
+			elif obj.name == 'WhatsApp.ViewModels.EmojiPickerCategoryViewModel':
+				obj.name = obj.firstChild.name
 		except:
 			pass
 		try:
@@ -200,7 +200,7 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_unread(self, gesture):
 		def search(txt):
-			words = ["غير مقرو", "unread", "непрочитанное сообщение", "Непрочитано", "непрочитанных сообщений", "Непрочитане"]
+			words = ['غير مقرو', 'unread', 'непрочитанное сообщение', 'Непрочитано', 'непрочитанных сообщений', 'Непрочитане']
 			for word in words:
 				if txt.find(word) != -1:
 					return word
@@ -212,7 +212,7 @@ class AppModule(appModuleHandler.AppModule):
 					msg.next.setFocus()
 					break
 			else:
-				message("There's no unread messages")
+				message('There\'s no unread messages')
 
 	@script(
 		category= category,
@@ -265,6 +265,20 @@ class AppModule(appModuleHandler.AppModule):
 		if attach:
 			message(attach.name)
 			attach.doAction()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Add emoji'),
+		gesture= 'kb:control+shift+e'
+	)
+	def script_attach(self, gesture):
+		emoji = self.get('EmojiButton', False, None)
+		if emoji:
+			message(emoji.name)
+			emoji.doAction()
 		else:
 			message(self.notFound)
 
@@ -343,7 +357,7 @@ class AppModule(appModuleHandler.AppModule):
 		name = self.get('TitleButton', False, None)
 		audioCall = self.get('AudioCallButton', True, gesture)
 		if audioCall:
-			message("Please wait, you will be connected with "+name.firstChild.name.strip()+" through an audio call.")
+			message('Please wait, you will be connected with '+name.firstChild.name.strip()+' through an audio call.')
 			audioCall.doAction()
 		else:
 			message(self.notFound)
@@ -358,7 +372,7 @@ class AppModule(appModuleHandler.AppModule):
 		name = self.get('TitleButton', False, None)
 		videoCall = self.get('VideoCallButton', True, gesture)
 		if videoCall:
-			message("Please wait, you will be connected with "+name.firstChild.name.strip()+" through a video call.")
+			message('Please wait, you will be connected with '+name.firstChild.name.strip()+' through a video call.')
 			videoCall.doAction()
 		else:
 			message(self.notFound)

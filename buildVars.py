@@ -29,7 +29,7 @@ addon_info = {
 	# Author(s)
 	"addon_author": "Gerardo Kessler <reaperyotrasyerbas@gmail.com>",
 	# URL for the add-on documentation support
-	"addon_url": "https://github.com/GerardKessler/whatsapp",
+	"addon_url": "https://github.com/lbk2907/WhatsAppEnhancements",
 	# Documentation file name
 	"addon_docFileName": "readme.html",
 	# Minimum NVDA version supported (e.g. "2018.3.0", minor version is optional)
