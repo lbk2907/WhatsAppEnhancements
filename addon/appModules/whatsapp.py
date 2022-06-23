@@ -274,7 +274,7 @@ class AppModule(appModuleHandler.AppModule):
 		description= _('Add emoji'),
 		gesture= 'kb:control+shift+e'
 	)
-	def script_attach(self, gesture):
+	def script_emoji(self, gesture):
 		emoji = self.get('EmojiButton', False, None)
 		if emoji:
 			message(emoji.name)
