@@ -9,9 +9,9 @@ This Add-On only compatible with the  WhatsApp (UWP Version), currently called W
 
 This plugin add the keyboard shortcuts to an important functions of the application, as well as renaming an unlabeled objects.
 
-# List of Shortcuts
+## List of Shortcuts
 
-## Add-On Shortcuts
+### Add-On Shortcuts
 
 * Open WhatsApp: Unassigned.
 * Create new conversation: Control+N.
@@ -33,7 +33,7 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * Video call: Control+Shift+C.
 * Activate and deactivate the reading of phone numbers for unsaved contacts while reading messages: Control+Shift+N.
 
-## App Shortcuts
+### App Shortcuts
 
 * Search  chat: Control+F.
 * Search in message: Control+Shift+F.
