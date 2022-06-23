@@ -1,46 +1,40 @@
-# whatsapp
+# WhatsAppEnhancements
 
-Autor: [Gerardo Kessler](http://gera.ar)  
+Author: [Gerardo Kessler](http://gera.ar), [Original Repository](https://github.com/GerardKessler/whatsapp)
+Translator: [Loh Boon Keat](https://github.com/lbk2907/)
 
-Importante:  
-Este complemento solo es compatible con la versión UWP de WhatsApp, actualmente llamada WhatsApp Beta. Asimismo en el caso de tener otros complementos instalados que se activen con la aplicación, como Whatsapp-desktop, se deberán deshabilitar para evitar conflictos.  
+Important:
+This Add-On only compatible with the  WhatsApp (UWP Version), currently called WhatsApp Beta. Likewise, in the case of having other plugins installed that are activated with the application such as WhatsApp-desktop, they must be disabled to avoid conflicts.
 
-Este complemento añade atajos de teclado a funciones importantes de la aplicación, así como el renombre de objetos sin etiqueta, a saber:
+This plugin add the keyboard shortcuts to an important functions of the application, as well as renaming an unlabeled objects.
 
-* Botón mensaje de voz, mal etiquetado cuando el cuadro está vacío.
-* Cancelar mensaje, al grabar un mensaje de voz.
-* Botón atrás en la ventana de chats archivados.
-* Opción chats archivados.
-* Botón cancelar, en el cuadro de búsqueda de mensajes.
+# List of Shortcuts
 
-## Lista de comandos
+## Add-On Shortcuts
 
-* Abrir la aplicación; sin asignar
-* Grabar y enviar mensajes de voz; control + r
-* Descartar el mensaje de voz en grabación; control + shift + r
-* Conocer el tiempo transcurrido en grabación; control + t
-* Conmutar entre la lista de mensajes y el cuadro de edición; alt + flecha izquierda
-* Enfocar la lista de chats; alt + flecha derecha
-* Verbalizar el nombre del contacto o grupo; control + shift + t
-* Verbalizar el mensaje de respuesta; alt + r
-* Pulsar el botón adjuntar; control + shift + a
-* Pulsar el botón llamada de audio; control + shift + l
-* Pulsar el botón llamada de video; control + shift + v
-* Pulsar el botón info del chat; control + shift + i
-* Pulsar el botón configuraciones; control + shift + o
-* Pulsar el botón nuevo chat; control + shift + n
-* Activar y desactivar la eliminación de los números de teléfono en los mensajes de contactos no agendados; control + shift + e
+* Open WhatsApp: Unassigned.
+* Create new conversation: Control+N.
+* More option: Alt+O.
+* Press the back button in the archived chats window and the close button for the search in message: Alt+B.
+* Focus on the chat list: Alt+C.
+* Focus on the last message in the message list: Alt+M.
+* Go to the first unread message in the message list: Alt+U.
+* Read the chat subtitle: Alt+T.
+* Conversation info: Alt+I.
+* Go to the typing message text field: Alt+E.
+* Add attachment: Control+Shift+A.
+* Add emoji: Control+Shift+E.
+* Record and send voice message: Control+R.
+* Pause and resume recording: Alt+R.
+* Discard voice message: Control+Shift+R.
+* Report the recording time when recording voice message: Control+T.
+* Audio call: Control+Shift+C.
+* Video call: Control+Shift+C.
+* Activate and deactivate the reading of phone numbers for unsaved contacts while reading messages: Control+Shift+N.
 
-### Atajos de la aplicación
+## App Shortcuts
 
-* Activar el cuadro de búsqueda de chats; control + f
-* Activar el cuadro de búsqueda de mensajes; control + shift + f
-* Activar el chat siguiente; control + tab
-* Activar el chat anterior; control + shift + tab
-
-## Traducción:
-
-Las siguientes personas colaboran con la traducción de este complemento
-
-* Rémy Ruiz (Francés)
-* Umut KORKMAZ (Turco)
+* Search  chat: Control+F.
+* Search in message: Control+Shift+F.
+* Go to next chat: Control+Tab.
+* Go to previous chat: Control+Shift+Tab.

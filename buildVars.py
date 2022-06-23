@@ -23,11 +23,11 @@ addon_info = {
 	"addon_summary": _("WhatsAppEnhancements"),
 	# Add-on description
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
-	"addon_description": _("""Plugin that renames unlabeled buttons, add keyboard shortcuts for main application functions and focus functions for better interaction with the interface."""),
+	"addon_description": _("""This plugin add the keyboard shortcuts to an important functions of the application, as well as renaming an unlabeled objects."""),
 	# version
 	"addon_version": "1.2",
 	# Author(s)
-	"addon_author": "Gerardo Kessler <reaperyotrasyerbas@gmail.com>",
+	"addon_author": "Loh Boon Keat <lbk2907@gmail.com>",
 	# URL for the add-on documentation support
 	"addon_url": "https://github.com/lbk2907/WhatsAppEnhancements",
 	# Documentation file name
