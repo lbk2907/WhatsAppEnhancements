@@ -53,13 +53,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	# Function that receives the UIAAutomationId by parameter, and returns the match object
 	def get(self, id, errorMessage, gesture):
-#		for obj in api.getForegroundObject().children[1].children:
-#			if obj.UIAAutomationId == id:
-#				return obj#
-		fg = api.getForegroundObject().children[1]
-		for obj in fg.children:
+		for obj in api.getForegroundObject().children[1].children:
 			if obj.UIAAutomationId == id:
-				return obj
+				return obj#
 		if errorMessage:
 			message(self.notFound)
 		if gesture:
@@ -176,7 +172,7 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_chatsList(self, gesture):
 		chatList = self.get('ChatList', False, None)
-		if ChatList:
+		if chatList:
 			chatList.firstChild.children[0].setFocus()
 		else:
 			message(self.notFound)
