@@ -49,7 +49,7 @@ class AppModule(appModuleHandler.AppModule):
 				self.viewConfig = f.read()
 		except FileNotFoundError:
 			with open(f'{appArgs.configPath}\\WhatsAppEnhancements.ini', 'w') as f:
-				f.write('disabled')
+				f.write('enabled')
 
 	# Function that receives the UIAAutomationId by parameter, and returns the match object
 	def get(self, id, errorMessage, gesture):
@@ -97,7 +97,7 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			pass
 		try:
-			if self.viewConfig == 'disabled': return
+			if self.viewConfig == 'enabled': return
 			if obj.UIAAutomationId == 'BubbleListItem':
 				obj.name = sub(r'\+\d[()\d\s‬-]{12,}', '', obj.name)
 		except:
