@@ -74,7 +74,7 @@ class AppModule(appModuleHandler.AppModule):
 			elif obj.name == '\ue8bb':
 				obj.name = _('Cancel reply')
 			elif obj.UIAAutomationId == "SendMessages":
-				obj.name = _(obj.previous.name+": "+obj.firstChild.name)
+				obj.name = obj.previous.name+": "+obj.firstChild.name
 			elif obj.UIAAutomationId == "EditInfo":
 				obj.name = _(obj.previous.name+": "+obj.firstChild.name)
 			elif obj.UIAAutomationId == "MuteDropdown":
@@ -123,9 +123,155 @@ class AppModule(appModuleHandler.AppModule):
 			nextHandler()
 
 	@script(
-	category= category,
-	# Item Description in Input Gestures Dialog
-	description= _('Start or stop recording'),
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Create new conversation'),
+		gesture= 'kb:control+n'
+	)
+	def script_newChat(self, gesture):
+		newChat = self.get('NewConvoButton', False, None)
+		if newChat:
+			message(newChat.name)
+			newChat.doAction()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('More option'),
+		gesture= 'kb:alt+o'
+	)
+	def script_settings(self, gesture):
+		settings = self.get('SettingsButton', False, None)
+		if settings:
+			message(settings.name)
+			settings.doAction()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Press the back button in the archived chats window and the close button for the search in message'),
+		gesture= 'kb:alt+b'
+	)
+	def script_backAndCloseButton(self, gesture):
+		backButton = self.get('BackButton', False, None)
+		closeButton = self.get('CloseButton', False, None)
+		if backButton:
+			backButton.doAction()
+		elif closeButton:
+			closeButton.doAction()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Focus on the chat list'),
+		gesture= 'kb:alt+c'
+	)
+	def script_chatsList(self, gesture):
+		chatList = self.get('ChatList', False, None)
+		if ChatList:
+			chatList.firstChild.children[0].setFocus()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Focus on the last message in the message list'),
+		gesture= 'kb:alt+m'
+	)
+	def script_messagesList(self, gesture):
+		listView = self.get('ListView', False, None)
+		if listView:
+			listView.lastChild.setFocus()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Go to the first unread message in the message list'),
+		gesture= 'kb:alt+u'
+	)
+	def script_unread(self, gesture):
+		def search(txt):
+			words = ["غير مقرو", "unread", "непрочитанное сообщение", "Непрочитано", "непрочитанных сообщений", "Непрочитане"]
+			for word in words:
+				if txt.find(word) != -1:
+					return word
+			return -1
+		listView = self.get('ListView', False, None)
+		if listView:
+			for msg in listView.children[::-1]:
+				if len(msg.children) == 1 and search(msg.name) != -1:
+					msg.next.setFocus()
+					break
+			else:
+				message("There's no unread messages")
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Read the chat subtitle'),
+		gesture= 'kb:alt+t'
+	)
+	def script_chatName(self, gesture):
+		title = self.get('TitleButton', False, None)
+		if title:
+			message(', '.join([obj.name.strip() for obj in title.children if len(obj.name) < 50]))
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Conversation info'),
+		gesture= 'kb:alt+i'
+	)
+	def script_moreInfo(self, gesture):
+		info = self.get('TitleButton', False, None)
+		if info:
+			message(info.name)
+			info.doAction()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Go to the typing message text field'),
+		gesture= 'kb:alt+e'
+	)
+	def script_messageField(self, gesture):
+		textBox = self.get('TextBox', False, None)
+		if textBox:
+			textBox.setFocus()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Add attachment'),
+		gesture= 'kb:control+shift+a'
+	)
+	def script_attach(self, gesture):
+		attach = self.get('AttachButton', False, None)
+		if attach:
+			message(attach.name)
+			attach.doAction()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= category,
+		# Item Description in Input Gestures Dialog
+		description= _('Record and send voice message'),
 		gesture= 'kb:control+r'
 	)
 	def script_record(self, gesture):
@@ -144,7 +290,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 	category= category,
 	# Item Description in Input Gestures Dialog
-	description= _('Pause or resume recording'),
+	description= _('Pause and resume recording'),
 		gesture= 'kb:alt+r'
 	)
 	def script_pause(self, gesture):
@@ -190,171 +336,22 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= category,
 		# Item Description in Input Gestures Dialog
-		description= _('Activate and deactivate the reading of phone numbers for unsaved contacts in messages'),
-		gesture= 'kb:control+shift+e'
+		description= _('Audio call'),
+		gesture= 'kb:control+shift+c'
 	)
-	def script_viewConfigToggle(self, gesture):
-		self.configFile()
-		with open(f'{appArgs.configPath}\\WhatsAppEnhancements.ini', 'w') as f:
-			if self.viewConfig == 'enabled':
-				f.write('disabled')
-				self.viewConfig = 'disabled'
-				message(_('Reading phone number disabled'))
-			else:
-				f.write('enabled')
-				self.viewConfig = 'enabled'
-				message(_('Reading phone number enabled'))
-
-	@script(
-	category= category,
-	# Item Description in Input Gestures Dialog
-	description= _('Press the back button'),
-		gesture= 'kb:alt+b'
-	)
-	def script_backAndCloseButton(self, gesture):
-		backButton = self.get('BackButton', False, None)
-		closeButton = self.get('CloseButton', False, None)
-		if backButton:
-			backButton.doAction()
-		elif closeButton:
-			closeButton.doAction()
-		else:
-			message(self.notFound)
-
-	@script(
-	category= category,
-	# Item Description in Input Gestures Dialog
-	description= _('Focus on the chat list'),
-		gesture= 'kb:alt+c'
-	)
-	def script_chatsList(self, gesture):
-		chatList = self.get('ChatList', False, None)
-		if ChatList:
-			chatList.firstChild.children[0].setFocus()
+	def script_audioCall(self, gesture):
+		name = self.get('TitleButton', False, None)
+		audioCall = self.get('AudioCallButton', True, gesture)
+		if audioCall:
+			message("Please wait, you will be connected with "+name.firstChild.name.strip()+" through an audio call.")
+			audioCall.doAction()
 		else:
 			message(self.notFound)
 
 	@script(
 		category= category,
 		# Item Description in Input Gestures Dialog
-		description= _('Go to the typing message text field'),
-		gesture= 'kb:alt+e'
-	)
-	def script_messageField(self, gesture):
-		textBox = self.get('TextBox', False, None)
-		if textBox:
-			textBox.setFocus()
-		else:
-			message(self.notFound)
-
-	@script(
-		category= category,
-		# Item Description in Input Gestures Dialog
-		description= _('Go to the messages list'),
-		gesture= 'kb:alt+m'
-	)
-	def script_messagesList(self, gesture):
-		listView = self.get('ListView', False, None)
-		if listView:
-			listView.lastChild.setFocus()
-		else:
-			message(self.notFound)
-
-	@script(
-		category= category,
-		# Item Description in Input Gestures Dialog
-		description= _('Go to the unread messages section'),
-		gesture= 'kb:alt+u'
-	)
-	def script_unread(self, gesture):
-		def search(txt):
-			words = ["غير مقرو", "unread", "непрочитанное сообщение", "Непрочитано", "непрочитанных сообщений", "Непрочитане"]
-			for word in words:
-				if txt.find(word) != -1:
-					return word
-			return -1
-		listView = self.get('ListView', False, None)
-		if listView:
-			for msg in listView.children[::-1]:
-				if len(msg.children) == 1 and search(msg.name) != -1:
-					msg.next.setFocus()
-					break
-			else:
-				message("There's no unread messages")
-
-	@script(
-		category= category,
-		# Item Description in Input Gestures Dialog
-		description= _('Read the chat subtitle'),
-		gesture= 'kb:alt+t'
-	)
-	def script_chatName(self, gesture):
-		title = self.get('TitleButton', False, None)
-		if title:
-			message(', '.join([obj.name.strip() for obj in title.children if len(obj.name) < 50]))
-		else:
-			message(self.notFound)
-
-	@script(
-		category= category,
-		# Item Description in Input Gestures Dialog
-		description= _('Press the attach button'),
-		gesture= 'kb:control+shift+a'
-	)
-	def script_attach(self, gesture):
-		attach = self.get('AttachButton', False, None)
-		if attach:
-			message(attach.name)
-			attach.doAction()
-		else:
-			message(self.notFound)
-
-	@script(
-		category= category,
-		# Item Description in Input Gestures Dialog
-		description= _('Open chat info'),
-		gesture= 'kb:alt+i'
-	)
-	def script_moreInfo(self, gesture):
-		info = self.get('TitleButton', False, None)
-		if info:
-			message(info.name)
-			info.doAction()
-		else:
-			message(self.notFound)
-
-	@script(
-		category= category,
-		# Item Description in Input Gestures Dialog
-		description= _('Press the more option button'),
-		gesture= 'kb:alt+o'
-	)
-	def script_settings(self, gesture):
-		settings = self.get('SettingsButton', False, None)
-		if settings:
-			message(settings.name)
-			settings.doAction()
-		else:
-			message(self.notFound)
-
-	@script(
-		category= category,
-		# Item Description in Input Gestures Dialog
-		description= _('Press the new chat button'),
-		gesture= 'kb:control+n'
-	)
-	def script_newChat(self, gesture):
-		newChat = self.get('NewConvoButton', False, None)
-		if newChat:
-			message(newChat.name)
-			newChat.doAction()
-		else:
-			message(self.notFound)
-
-	@script(
-		category= category,
-		# Item Description in Input Gestures Dialog
-		description= _('Press the video call button'),
+		description= _('Video call'),
 		gesture= 'kb:control+shift+v'
 	)
 	def script_videoCall(self, gesture):
@@ -369,14 +366,17 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= category,
 		# Item Description in Input Gestures Dialog
-		description= _('Press the audio call button'),
-		gesture= 'kb:control+shift+c'
+		description= _('Activate and deactivate the reading of phone numbers for unsaved contacts while reading messages'),
+		gesture= 'kb:control+shift+n'
 	)
-	def script_audioCall(self, gesture):
-		name = self.get('TitleButton', False, None)
-		audioCall = self.get('AudioCallButton', True, gesture)
-		if audioCall:
-			message("Please wait, you will be connected with "+name.firstChild.name.strip()+" through an audio call.")
-			audioCall.doAction()
-		else:
-			message(self.notFound)
+	def script_viewConfigToggle(self, gesture):
+		self.configFile()
+		with open(f'{appArgs.configPath}\\WhatsAppEnhancements.ini', 'w') as f:
+			if self.viewConfig == 'enabled':
+				f.write('disabled')
+				self.viewConfig = 'disabled'
+				message(_('Reading phone number disabled'))
+			else:
+				f.write('enabled')
+				self.viewConfig = 'enabled'
+				message(_('Reading phone number enabled'))
