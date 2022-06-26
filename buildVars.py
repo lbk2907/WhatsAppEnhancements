@@ -25,7 +25,7 @@ addon_info = {
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 	"addon_description": _("""This plugin add the keyboard shortcuts to an important functions of the application, as well as renaming an unlabeled objects."""),
 	# version
-	"addon_version": "1.2",
+	"addon_version": "1.3",
 	# Author(s)
 	"addon_author": "Loh Boon Keat <lbk2907@gmail.com>",
 	# URL for the add-on documentation support
