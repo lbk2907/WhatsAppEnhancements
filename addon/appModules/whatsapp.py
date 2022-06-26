@@ -121,7 +121,7 @@ class AppModule(appModuleHandler.AppModule):
 			nextHandler()
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Create new conversation'),
 		gesture= 'kb:control+n'
@@ -135,7 +135,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('More option'),
 		gesture= 'kb:alt+o'
@@ -149,7 +149,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Press the back button in the archived chats window and the close button for the search in message'),
 		gesture= 'kb:alt+b'
@@ -165,7 +165,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Focus on the chat list'),
 		gesture= 'kb:alt+c'
@@ -178,7 +178,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Focus on the last message in the message list'),
 		gesture= 'kb:alt+m'
@@ -191,7 +191,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Go to the first unread message in the message list'),
 		gesture= 'kb:alt+u'
@@ -213,7 +213,7 @@ class AppModule(appModuleHandler.AppModule):
 				message('There\'s no unread messages')
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Read the chat subtitle'),
 		gesture= 'kb:alt+t'
@@ -226,7 +226,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Conversation info'),
 		gesture= 'kb:alt+i'
@@ -240,7 +240,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Go to the typing message text field'),
 		gesture= 'kb:alt+e'
@@ -253,7 +253,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Add attachment'),
 		gesture= 'kb:control+shift+a'
@@ -267,7 +267,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Add emoji'),
 		gesture= 'kb:control+shift+e'
@@ -281,7 +281,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Record and send voice message'),
 		gesture= 'kb:control+r'
@@ -300,7 +300,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-	category= category,
+	category= 'WhatsAppEnhancements',
 	# Item Description in Input Gestures Dialog
 	description= _('Pause and resume recording'),
 		gesture= 'kb:alt+r'
@@ -319,7 +319,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Discard voice message'),
 		gesture= 'kb:control+shift+r'
@@ -333,7 +333,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Report the recording time when recording voice message'),
 		gesture= 'kb:control+t'
@@ -346,7 +346,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Audio call'),
 		gesture= 'kb:control+shift+c'
@@ -361,7 +361,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Video call'),
 		gesture= 'kb:control+shift+v'
@@ -376,7 +376,7 @@ class AppModule(appModuleHandler.AppModule):
 			message(self.notFound)
 
 	@script(
-		category= category,
+		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
 		description= _('Activate and deactivate the reading of phone numbers for unsaved contacts while reading messages'),
 		gesture= 'kb:control+shift+n'
