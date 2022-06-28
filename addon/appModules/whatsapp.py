@@ -77,6 +77,12 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = obj.previous.name + obj.firstChild.children[1].name
 			elif obj.name == 'WhatsApp.Design.ThemeData':
 				obj.name = obj.children[1].name
+			elif obj.UIAAutomationId == "MuteDropdown":
+				obj.name = obj.children[0].name
+			elif obj.UIAAutomationId == 'SendMessages':
+				obj.name = obj.previous.name+': '+obj.firstChild.name
+			elif obj.UIAAutomationId == 'EditInfo':
+				obj.name = _(obj.previous.name+': '+obj.firstChild.name)
 			if obj.name in ("WhatsApp.WaCollections.KeyedObservableCollection`2[WhatsApp.GroupItem,WhatsApp.RecipientItem]", "WhatsApp.RecipientItem", "WhatsApp.ReceiptViewModel",):
 				obj.name = ", ".join([m.name for m in obj.children])
 			if obj.name == 'WhatsApp.PeerStreamVm':
@@ -236,6 +242,19 @@ class AppModule(appModuleHandler.AppModule):
 		if info:
 			message(info.name)
 			info.doAction()
+		else:
+			message(self.notFound)
+
+	@script(
+		category= 'WhatsAppEnhancements',
+		# Item Description in Input Gestures Dialog
+		description= _('Read the Encryption Code when you are at the encryption tab in the conversation info'),
+		gesture= 'kb:alt+n'
+	)
+	def script_encryptionCode(self, gesture):
+		encryption = self.get('NumericQrTextBlock', False, None)
+		if encryption:
+			message(info.name)
 		else:
 			message(self.notFound)
 

@@ -22,6 +22,7 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * Go to the first unread message in the message list: Alt+U.
 * Read the chat subtitle: Alt+T.
 * Conversation info: Alt+I.
+* Read the Encryption Code when you are at the encryption tab in the conversation info: Alt+N.
 * Go to the typing message text field: Alt+E.
 * Add attachment: Control+Shift+A.
 * Add emoji: Control+Shift+E.
@@ -46,3 +47,4 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 
 * Added change log.
 * You can now change the gesture from the input gesture dialog.
+* Add the gesture to read the Encryption Code when you are at the encryption tab in the conversation info.
