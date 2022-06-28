@@ -47,4 +47,4 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 
 * Added change log.
 * You can now change the gesture from the input gesture dialog.
-* Add the gesture to read the Encryption Code when you are at the encryption tab in the conversation info.
+* Label the mute button in the conversation info.

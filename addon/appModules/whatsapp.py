@@ -248,19 +248,6 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Read the Encryption Code when you are at the encryption tab in the conversation info'),
-		gesture= 'kb:alt+n'
-	)
-	def script_encryptionCode(self, gesture):
-		encryption = self.get('NumericQrTextBlock', False, None)
-		if encryption:
-			message(info.name)
-		else:
-			message(self.notFound)
-
-	@script(
-		category= 'WhatsAppEnhancements',
-		# Item Description in Input Gestures Dialog
 		description= _('Go to the typing message text field'),
 		gesture= 'kb:alt+e'
 	)
