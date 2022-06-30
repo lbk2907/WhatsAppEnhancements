@@ -31,7 +31,7 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * Discard voice message: Control+Shift+R.
 * Report the recording time when recording voice message: Control+T.
 * Audio call: Control+Shift+C.
-* Video call: Control+Shift+C.
+* Video call: Control+Shift+V.
 * Activate and deactivate the reading of phone numbers for unsaved contacts while reading messages: Control+Shift+N.
 
 ### App Shortcuts
