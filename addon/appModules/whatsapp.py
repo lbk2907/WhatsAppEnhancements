@@ -103,7 +103,7 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			if self.viewConfig == 'enabled': return
 			if obj.UIAAutomationId == 'BubbleListItem':
-				obj.name = sub(r'\+\d[()\d\s‬-]{12,}', '', obj.name)
+				obj.name = sub(r'‪\+\d[()\d\s‬-]{12,}', '', obj.name)
 		except:
 			pass
 
