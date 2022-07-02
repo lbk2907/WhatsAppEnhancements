@@ -98,6 +98,8 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = obj.children[1].name
 			elif obj.name == 'WhatsApp.ViewModels.EmojiPickerCategoryViewModel':
 				obj.name = obj.firstChild.name
+			elif obj.name == 'WhatsApp.Pages.Recipients.RecipientGroupingVm`1[WhatsApp.Pages.Recipients.ForwardMessageVm+IItem]':
+				obj.name = obj.firstChild.name
 		except:
 			pass
 		try:
