@@ -18,20 +18,19 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * More option: Alt+O.
 * Press the back button in the archived chats window and the close button for the search in message: Alt+B.
 * Focus on the chat list: Alt+C.
-* Focus on the last message in the message list: Alt+M.
-* Go to the first unread message in the message list: Alt+U.
+* Go to the last message in the current chat: Alt+M.
+* Go to the first unread message in the current chat: Alt+U.
 * Read the chat subtitle: Alt+T.
-* Conversation info: Alt+I.
-* Read the Encryption Code when you are at the encryption tab in the conversation info: Alt+N.
-* Go to the typing message text field: Alt+E.
-* Add attachment: Control+Shift+A.
-* Add emoji: Control+Shift+E.
-* Record and send voice message: Control+R.
+* Open the conversation info for the current chat: Alt+I.
+* Go to the typing message text field for the currently openned conversation: Alt+E.
+* Open attachment menu in the current chat: Control+Shift+A.
+* Open the emoji panel in the currently openned conversation: Control+Shift+E.
+* Record and send voice message in the currently openned conversation: Control+R.
 * Pause and resume recording: Alt+R.
 * Discard voice message: Control+Shift+R.
-* Report the recording time when recording voice message: Control+T.
-* Audio call: Control+Shift+C.
-* Video call: Control+Shift+V.
+* Report the duration while recording a voice message: Control+T.
+* Start a voice call in a currently openned conversation: Control+Shift+C.
+* Start a Video call in the currently openned conversation: Control+Shift+V.
 * Activate and deactivate the reading of phone numbers for unsaved contacts while reading messages: Control+Shift+N.
 
 ### App Shortcuts
@@ -40,7 +39,7 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * Search in message: Control+Shift+F.
 * Go to next chat: Control+Tab.
 * Go to previous chat: Control+Shift+Tab.
-
+Close current conversation:Control+w
 ##Change Log
 
 ###1.3
