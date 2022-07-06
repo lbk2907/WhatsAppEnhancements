@@ -24,7 +24,7 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * Open the conversation info for the current chat: Alt+I.
 * Go to the typing message text field for the currently openned conversation: Alt+E.
 * Open attachment menu in the current chat: Control+Shift+A.
-* Open emoji panel in the currently openned conversation: Control+Shift+E.
+* Open the emoji panel in the currently openned conversation: Control+Shift+E.
 * Record and send voice message in the currently openned conversation: Control+R.
 * Pause and resume recording: Alt+R.
 * Discard voice message: Control+Shift+R.
