@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # Copyright (C) 2021 Gerardo Kessler <ReaperYOtrasYerbas@gmail.com>
 # This file is covered by the GNU General Public License.
 
@@ -256,7 +256,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Go to the typing message text field'),
+		description= _('Go to the typing message text field for the currently openned conversation'),
 		gesture= 'kb:alt+e'
 	)
 	def script_messageField(self, gesture):
@@ -283,7 +283,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Open the emoji panel in the currently openned conversation'),
+		description= _('Open emoji panel in the currently openned conversation'),
 		gesture= 'kb:control+shift+e'
 	)
 	def script_emoji(self, gesture):
@@ -297,7 +297,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Record and send voice message'),
+		description= _('Record and send voice message in the currently openned conversation'),
 		gesture= 'kb:control+r'
 	)
 	def script_record(self, gesture):
