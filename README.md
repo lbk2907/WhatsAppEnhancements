@@ -41,7 +41,6 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * Go to previous chat: Control+Shift+Tab.
 * Close current conversation: Control+w
 
-
 ## Change Log
 
 ### 1.3
