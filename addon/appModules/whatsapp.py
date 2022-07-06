@@ -39,6 +39,7 @@ class AppModule(appModuleHandler.AppModule):
 		super(AppModule, self).__init__(*args, **kwargs)
 		# Message announcing that an element was not found
 		self.notFound = _('Item not found')
+		self.lastChat = None
 		self.soundsPath = os.path.join(appArgs.configPath, 'addons', 'WhatsAppEnhancements', 'sounds')
 		self.configFile()
 
@@ -111,10 +112,33 @@ class AppModule(appModuleHandler.AppModule):
 	def event_gainFocus(self, obj, nextHandler):
 		try:
 			# Rename the message with attached document by the text of the objects that have the file name, type and size
-			if obj.UIAAutomationId == 'BubbleListItem' and (obj.children[1].UIAAutomationId == 'NameTextBlock' or obj.children[2].UIAAutomationId == 'NameTextBlock' or obj.children[3].UIAAutomationId == 'NameTextBlock' or obj.children[4].UIAAutomationId == 'NameTextBlock'):
-				for data in obj.children:
-					if data.UIAAutomationId == 'NameTextBlock':
-						obj.name = '{}, {}'.format(data.name, data.next.name)
+			if obj.UIAAutomationId == 'BubbleListItem':
+				for i in range(1, 9):
+					if obj.children[i].UIAAutomationId == 'NameTextBlock':
+						for data in obj.children:
+							if data.UIAAutomationId == 'NameTextBlock':
+								obj.name = '{}, {}, {}'.format(data.name, data.next.name, data.next.next.next.next.name)
+					if obj.children[i].UIAAutomationId == 'ReactionBubble':
+						for data in obj.children:
+							if data.UIAAutomationId == 'ReactionBubble':
+								obj.name = '{}. Reaction available.'.format(obj.name)
+#					elif obj.children[i].UIAAutomationId == 'NameTextBlock' and obj.children[i].UIAAutomationId == 'ReactionBubble':
+#						for data in obj.children:
+#							if data.UIAAutomationId == 'NameTextBlock' and data.UIAAutomationId == 'ReactionBubble':
+#								obj.name = '{}. Extra information available. Reaction available.'.format(obj.name)
+#				for i in range(1, 9):
+#					elif obj.children[i].UIAAutomationId == 'ReactionBubble':
+#						for data in obj.children:
+#							if data.UIAAutomationId == 'ReactionBubble':
+#						obj.name = '{}, {}'.format(data.name, data.next.name)
+#								obj.name = '{}'.format(data.name)
+			else:
+				nextHandler()
+		except:
+			nextHandler()
+		try:
+			if obj.UIAAutomationId == 'ChatsListItem':
+				self.lastChat = obj
 			else:
 				nextHandler()
 		except:
