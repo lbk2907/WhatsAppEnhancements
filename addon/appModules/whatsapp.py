@@ -207,7 +207,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Go to the first unread message in the message list'),
+		description= _('Go to the first unread message in the current chat'),
 		gesture= 'kb:alt+u'
 	)
 	def script_unread(self, gesture):
