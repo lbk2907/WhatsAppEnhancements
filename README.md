@@ -28,7 +28,7 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * Record and send voice message in the currently openned conversation: Control+R.
 * Pause and resume recording: Alt+R.
 * Discard voice message: Control+Shift+R.
-* Report the duration while recording a voice message: Control+T.
+* Report the recording duration while recording voice message: Control+T.
 * Start a voice call in a currently openned conversation: Control+Shift+C.
 * Start a Video call in the currently openned conversation: Control+Shift+V.
 * Activate and deactivate the reading of phone numbers for unsaved contacts while reading messages: Control+Shift+N.
