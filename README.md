@@ -42,9 +42,9 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * Close current conversation: Control+w
 
 
-##Change Log
+## Change Log
 
-###1.3
+### 1.3
 
 * Added change log.
 * You can now change the gesture from the input gesture dialog.
