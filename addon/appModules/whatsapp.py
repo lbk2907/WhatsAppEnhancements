@@ -69,36 +69,36 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = _('Cancel')
 			elif obj.name == '\ue8bb':
 				obj.name = _('Cancel reply')
+			elif obj.name == '\ue76e':
+				obj.name = 'React to message'
 			elif obj.UIAAutomationId == 'SendMessages':
-				obj.name = obj.previous.name+': '+obj.firstChild.name
+				obj.name = '{}: {}'.format(obj.previous.name, obj.firstChild.name)
 			elif obj.UIAAutomationId == 'EditInfo':
-				obj.name = _(obj.previous.name+': '+obj.firstChild.name)
+				obj.name = '{}: {}'.format(obj.previous.name, obj.firstChild.name)
 			elif obj.UIAAutomationId == 'ThemeCombobox':
 				obj.name = obj.previous.name + obj.firstChild.children[1].name
 			elif obj.name == 'WhatsApp.Design.ThemeData':
 				obj.name = obj.children[1].name
+			elif obj.UIAAutomationId == 'NewMessagesNotificationSwitch':
+				obj.name = '{}:  {}'.format(obj.previous.name, obj.name)
+			elif obj.UIAAutomationId == 'WhenWAClosedSwitch':
+				obj.name = '{}:  {}'.format(obj.previous.name, obj.name)
 			elif obj.UIAAutomationId == "MuteDropdown":
 				obj.name = obj.children[0].name
-			elif obj.UIAAutomationId == 'SendMessages':
-				obj.name = obj.previous.name+': '+obj.firstChild.name
-			elif obj.UIAAutomationId == 'EditInfo':
-				obj.name = _(obj.previous.name+': '+obj.firstChild.name)
 			if obj.name in ("WhatsApp.WaCollections.KeyedObservableCollection`2[WhatsApp.GroupItem,WhatsApp.RecipientItem]", "WhatsApp.RecipientItem", "WhatsApp.ReceiptViewModel",):
 				obj.name = ", ".join([m.name for m in obj.children])
 			if obj.name == 'WhatsApp.PeerStreamVm':
 				if obj.firstChild.children[1].name == 'Ringing...':
-					obj.name = obj.firstChild.children[0].name + ', ' + obj.firstChild.children[1].name
+					obj.name = '{}, {}'.format(obj.firstChild.children[0].name, obj.firstChild.children[1].name)
 				elif obj.firstChild.children[2].name == 'Muted':
-					obj.name = obj.firstChild.children[0].name + ', ' + obj.firstChild.children[2].name + ', ' + obj.firstChild.children[3].name
+					obj.name = '{}, {}, {}'.format(obj.firstChild.children[0].name, obj.firstChild.children[2].name, obj.firstChild.children[3].name)
 				else:
-					obj.name = _(obj.firstChild.children[0].name + ', Unmuted, ' + obj.firstChild.children[2].name)
+					obj.name = _('{}, unmuted, {}'.format(obj.firstChild.children[0].name, obj.firstChild.children[2].name))
 			elif obj.UIAAutomationId in ('CancelButton', 'RejectButton'):	
 				obj.name = obj.firstChild.name
 			elif obj.UIAAutomationId == 'AcceptButton':
 				obj.name = obj.children[1].name
-			elif obj.name == 'WhatsApp.ViewModels.EmojiPickerCategoryViewModel':
-				obj.name = obj.firstChild.name
-			elif obj.name == 'WhatsApp.Pages.Recipients.RecipientGroupingVm`1[WhatsApp.Pages.Recipients.ForwardMessageVm+IItem]':
+			elif obj.name in ('WhatsApp.ViewModels.EmojiPickerCategoryViewModel', 'WhatsApp.Pages.Recipients.RecipientGroupingVm`1[WhatsApp.Pages.Recipients.ForwardMessageVm+IItem]'):
 				obj.name = obj.firstChild.name
 		except:
 			pass
