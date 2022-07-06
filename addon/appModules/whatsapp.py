@@ -349,7 +349,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Report the recording time when recording voice message'),
+		description= _('Report the recording duration while recording voice message'),
 		gesture= 'kb:control+t'
 	)
 	def script_timeAnnounce(self, gesture):
