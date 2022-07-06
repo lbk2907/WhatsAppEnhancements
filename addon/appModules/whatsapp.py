@@ -242,7 +242,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Conversation info'),
+		description= _('Open the conversation info for the current chat'),
 		gesture= 'kb:alt+i'
 	)
 	def script_moreInfo(self, gesture):
@@ -269,7 +269,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Open attachment menu'),
+		description= _('Open attachment menu in the current chat'),
 		gesture= 'kb:control+shift+a'
 	)
 	def script_attach(self, gesture):
