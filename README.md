@@ -39,7 +39,8 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * Search in message: Control+Shift+F.
 * Go to next chat: Control+Tab.
 * Go to previous chat: Control+Shift+Tab.
-* Close current conversation:Control+w
+* Close current conversation: Control+w
+
 
 ##Change Log
 
