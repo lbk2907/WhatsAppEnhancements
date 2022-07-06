@@ -362,7 +362,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Start a voice call on a currently openned conversation'),
+		description= _('Start a voice call in a currently openned conversation'),
 		gesture= 'kb:control+shift+c'
 	)
 	def script_audioCall(self, gesture):
@@ -377,7 +377,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Start a video call on a currently openned conversation'),
+		description= _('Start a video call in a currently openned conversation'),
 		gesture= 'kb:control+shift+v'
 	)
 	def script_videoCall(self, gesture):
