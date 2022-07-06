@@ -194,7 +194,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Focus on the last message in the message list'),
+		description= _('Go to the last message in the current chat'),
 		gesture= 'kb:alt+m'
 	)
 	def script_messagesList(self, gesture):
