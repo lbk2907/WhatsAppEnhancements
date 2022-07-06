@@ -98,7 +98,7 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = obj.firstChild.name
 			elif obj.UIAAutomationId == 'AcceptButton':
 				obj.name = obj.children[1].name
-			elif obj.name in ('WhatsApp.ViewModels.EmojiPickerCategoryViewModel', 'WhatsApp.Pages.Recipients.RecipientGroupingVm`1[WhatsApp.Pages.Recipients.ForwardMessageVm+IItem]'):
+			elif obj.name in ('WhatsApp.ViewModels.EmojiPickerCategoryViewModel', 'WhatsApp.Pages.Recipients.RecipientGroupingVm`1[WhatsApp.Pages.Recipients.NewChatVm+IItem]', 'WhatsApp.Pages.Recipients.RecipientGroupingVm`1[WhatsApp.Pages.Recipients.ForwardMessageVm+IItem]'):
 				obj.name = obj.firstChild.name
 		except:
 			pass
@@ -122,16 +122,6 @@ class AppModule(appModuleHandler.AppModule):
 						for data in obj.children:
 							if data.UIAAutomationId == 'ReactionBubble':
 								obj.name = '{}. Reaction available.'.format(obj.name)
-#					elif obj.children[i].UIAAutomationId == 'NameTextBlock' and obj.children[i].UIAAutomationId == 'ReactionBubble':
-#						for data in obj.children:
-#							if data.UIAAutomationId == 'NameTextBlock' and data.UIAAutomationId == 'ReactionBubble':
-#								obj.name = '{}. Extra information available. Reaction available.'.format(obj.name)
-#				for i in range(1, 9):
-#					elif obj.children[i].UIAAutomationId == 'ReactionBubble':
-#						for data in obj.children:
-#							if data.UIAAutomationId == 'ReactionBubble':
-#						obj.name = '{}, {}'.format(data.name, data.next.name)
-#								obj.name = '{}'.format(data.name)
 			else:
 				nextHandler()
 		except:
@@ -377,9 +367,9 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_audioCall(self, gesture):
 		name = self.get('TitleButton', False, None)
-		audioCall = self.get('AudioCallButton', True, gesture)
+		audioCall = self.get('AudioCallButton', False, None)
 		if audioCall:
-			message('Please wait, you will be connected with '+name.firstChild.name.strip()+' through an audio call.')
+			message(_('Please wait, you will be connected with {} through an audio call.'.format(name.firstChild.name.strip())))
 			audioCall.doAction()
 		else:
 			message(self.notFound)
@@ -392,9 +382,9 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_videoCall(self, gesture):
 		name = self.get('TitleButton', False, None)
-		videoCall = self.get('VideoCallButton', True, gesture)
+		videoCall = self.get('VideoCallButton', False, None)
 		if videoCall:
-			message('Please wait, you will be connected with '+name.firstChild.name.strip()+' through a video call.')
+			message(_('Please wait, you will be connected with {} through a video call.'.format(name.firstChild.name.strip())))
 			videoCall.doAction()
 		else:
 			message(self.notFound)
