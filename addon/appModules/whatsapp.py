@@ -269,7 +269,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Add attachment'),
+		description= _('Open attachment menu'),
 		gesture= 'kb:control+shift+a'
 	)
 	def script_attach(self, gesture):
@@ -283,7 +283,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Add emoji'),
+		description= _('Open the emoji panel in the currently openned conversation'),
 		gesture= 'kb:control+shift+e'
 	)
 	def script_emoji(self, gesture):
@@ -362,7 +362,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Audio call'),
+		description= _('Start a voice call on a currently openned conversation'),
 		gesture= 'kb:control+shift+c'
 	)
 	def script_audioCall(self, gesture):
@@ -377,7 +377,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category= 'WhatsAppEnhancements',
 		# Item Description in Input Gestures Dialog
-		description= _('Video call'),
+		description= _('Start a video call on a currently openned conversation'),
 		gesture= 'kb:control+shift+v'
 	)
 	def script_videoCall(self, gesture):
