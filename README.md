@@ -49,3 +49,4 @@ This plugin add the keyboard shortcuts to an important functions of the applicat
 * You can now change the gesture from the input gesture dialog.
 * Label the mute button in the conversation info.
 * Add an ability to automaticly read the grouping lable when finding the chats or contacts in the forwarding message window.
+* You will be notify with the message "reaction available" at the end of the message if that message has reaction.
